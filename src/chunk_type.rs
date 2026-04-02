@@ -1,6 +1,6 @@
 use std::{fmt::Display, str::FromStr};
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct ChunkType {
     bytes: [u8; 4],
 }
@@ -30,13 +30,12 @@ impl ChunkType {
         self.is_reserved_bit_valid()
     }
 
-    fn from_bytes(bytes: [u8; 4]) -> Self {
+    pub fn from_bytes(bytes: [u8; 4]) -> Self {
         Self { bytes }
     }
-
 }
 
-impl TryFrom<[u8;4]> for ChunkType {
+impl TryFrom<[u8; 4]> for ChunkType {
     type Error = String;
 
     fn try_from(bytes: [u8; 4]) -> Result<Self, Self::Error> {
@@ -61,7 +60,6 @@ impl FromStr for ChunkType {
         byte_array.copy_from_slice(bytes);
         Self::try_from(byte_array)
     }
-    
 }
 
 impl Display for ChunkType {
@@ -71,9 +69,6 @@ impl Display for ChunkType {
     }
 }
 
-
-#[allow(unused_variables)]
-fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -84,7 +79,6 @@ mod tests {
     pub fn test_chunk_type_from_bytes() {
         let expected = [82, 117, 83, 116];
         let actual = ChunkType::try_from([82, 117, 83, 116]).unwrap();
-
         assert_eq!(expected, actual.bytes());
     }
 
@@ -171,5 +165,4 @@ mod tests {
         let _chunk_string = format!("{}", chunk_type_1);
         let _are_chunks_equal = chunk_type_1 == chunk_type_2;
     }
-}
 }
