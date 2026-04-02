@@ -1,7 +1,7 @@
 use std::{fmt::Display, str::FromStr};
 
 #[derive(Debug, PartialEq, Eq)]
-struct ChunkType {
+pub struct ChunkType {
     bytes: [u8; 4],
 }
 
@@ -72,7 +72,7 @@ impl Display for ChunkType {
 }
 
 
-#[allow(dead_code)]
+#[allow(unused_variables)]
 fn main() {
 #[cfg(test)]
 mod tests {
